@@ -1,5 +1,5 @@
 # Use an official Node.js runtime as a parent image
-FROM node:16
+FROM node:19.5.0-alpine
 
 # Set the working directory inside the container
 WORKDIR /usr/src/app
@@ -18,3 +18,6 @@ EXPOSE 8080
 
 # Start the application
 CMD ["node", "app.js"]
+
+
+
