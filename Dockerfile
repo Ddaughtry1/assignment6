@@ -4,15 +4,19 @@ FROM node:16
 # Set the working directory inside the container
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json files
+# Install dependencies in smaller steps
+RUN apt-get update \
+    && apt-get install -y build-essential python3 make gcc g++ \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Set registry explicitly and install build tools
-RUN npm config set registry https://registry.npmjs.org/ \
-    && apt-get update && apt-get install -y build-essential \
-    && npm install
+# Install Node.js dependencies
+RUN npm install --loglevel=error
 
-# Copy the application source code
+# Copy the application code
 COPY . .
 
 # Expose the application port
