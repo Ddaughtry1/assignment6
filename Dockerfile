@@ -7,8 +7,6 @@ WORKDIR /usr/src/app
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
-RUN apk update && apk add npm
-
 # Install the application dependencies
 RUN npm install
 
