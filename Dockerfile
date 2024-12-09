@@ -7,10 +7,12 @@ WORKDIR /usr/src/app
 # Copy package.json and package-lock.json files
 COPY package*.json ./
 
-# Install application dependencies
-RUN npm install
+# Set registry explicitly and install build tools
+RUN npm config set registry https://registry.npmjs.org/ \
+    && apt-get update && apt-get install -y build-essential \
+    && npm install
 
-# Copy the entire application source code to the working directory
+# Copy the application source code
 COPY . .
 
 # Expose the application port
